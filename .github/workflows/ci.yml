@@ -1,0 +1,32 @@
+name: Run Playwright Tests
+
+on:
+  push:
+    branches:
+      - main  # Запуск при пуше в ветку main
+  pull_request:
+    branches:
+      - main  # Запуск при создании pull request в ветку main
+
+jobs:
+  test:
+    runs-on: ubuntu-latest  # Использование последней версии Ubuntu
+
+    steps:
+    - name: Checkout repository
+      uses: actions/checkout@v3  # Клонирование репозитория
+
+    - name: Set up Node.js
+      uses: actions/setup-node@v3
+      with:
+        node-version: '16'  # Устанавливаем Node.js версии 16
+
+    - name: Install dependencies
+      run: |
+        npm install  # Устанавливаем зависимости, включая Playwright
+
+    - name: Install Playwright Browsers
+      run: npx playwright install  # Устанавливаем браузеры, необходимые для тестов
+
+    - name: Run tests
+      run: npx playwright test  # Запуск тестов Playwright
