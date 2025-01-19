@@ -19,7 +19,11 @@ jobs:
     - name: Set up Node.js
       uses: actions/setup-node@v3
       with:
-        node-version: '16'
+        node-version: '18'  # Обновляем Node.js до версии 18
+
+    - name: Install npm 9
+      run: |
+        npm install -g npm@9  # Обновляем npm до версии 9
 
     - name: Install dependencies
       run: |
@@ -63,7 +67,13 @@ jobs:
           libxrender1 \
           libglib2.0-0 \
           libudev1 \
-          libv4l-0  # Устанавливаем дополнительные зависимости
+          libv4l-0 \
+          libopus0 \
+          libgst1.0-0 \
+          libflite1 \
+          libgles2-mesa \
+          libdbus-glib-1-2 \
+          libx264-152  # Устанавливаем дополнительные зависимости
 
     - name: Install Allure Commandline
       run: |
