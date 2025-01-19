@@ -46,7 +46,7 @@ export class MainPage{
     }
     
     async hideTop(){
-        await expect(this.tableTop).toBeVisible();
+        await expect(this.tableTop).toBeVisible({ timeout: 5000 });
         await this.hideTopButton.click();
         await expect(this.tableTop).toBeHidden();
     }
@@ -54,7 +54,7 @@ export class MainPage{
     async showUtypeTop(){
         await expect(this.UtypeTop).toBeHidden();
         await this.typeU.click();
-        await expect(this.UtypeTop).toBeVisible();
+        await expect(this.UtypeTop).toBeVisible({ timeout: 5000 });
     }
 
     async thickSelect(thick){
@@ -63,7 +63,7 @@ export class MainPage{
 
             // Выполните действия в зависимости от текста
             if (thickContent != thick) {
-            // Действия, если текст равен "2"
+            // Действия, если текст равен "thick"
             console.log('Неверная толщина, меняем на ' + thick);
             await this.thickness.click();
             await expect(this.thicknessSelect).toBeVisible();
@@ -80,9 +80,9 @@ export class MainPage{
     }
 
     async plinthSwitch(){
-        await expect(this.plinthButton).toBeVisible();
-        await expect(this.plinthLeft).toBeVisible();
-        await expect(this.plinthRight).toBeVisible();
+        await expect(this.plinthButton).toBeVisible({ timeout: 5000 });
+        await expect(this.plinthLeft).toBeVisible({ timeout: 5000 });
+        await expect(this.plinthRight).toBeVisible({ timeout: 5000 });
         await this.plinthButton.click();
         await expect(this.plinthLeft).toBeHidden();
         await expect(this.plinthRight).toBeHidden();
@@ -91,29 +91,25 @@ export class MainPage{
     async islandSwitch(){
         await expect(this.island).toBeHidden();
         await this.islandButton.click();
-        await this.island.waitFor({ state: 'visible' });
-        await expect(this.island).toBeVisible();
+        await expect(this.island).toBeVisible({ timeout: 5000 });
     } 
 
     async grooveSwitch(){
         await expect(this.groove).toBeHidden();
         await this.grooveButton.click();
-        await this.groove.waitFor({ state: 'visible' });
-        await expect(this.groove).toBeVisible();
+        await expect(this.groove).toBeVisible({ timeout: 5000 });
     }  
     
     async colorSwitch(){
         await expect(this.color).toBeVisible();
         await this.color.click();
-        await this.colorSelected.waitFor({ state: 'visible' });
-        await expect(this.colorSelected).toBeVisible();
+        await expect(this.colorSelected).toBeVisible({ timeout: 5000 });
     }
 
     async report() {
         await expect(this.calcButton).toBeVisible();
         await this.calcButton.click();
-        await this.reportButton.waitFor({ state: 'visible' });
-        await expect(this.reportButton).toBeVisible();
+        await expect(this.reportButton).toBeVisible({ timeout: 30000 });
         await this.reportButton.click();
     }
 }
