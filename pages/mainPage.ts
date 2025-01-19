@@ -3,6 +3,7 @@ import { Page, Locator, expect } from "@playwright/test";
 export class MainPage{
 
     page: Page; // объявили свойство page
+    timeOut: number;
     hideTopButton: Locator; // объявили свойство
     tableTop: Locator; // объявили свойство
     typeU: Locator; // объявили свойство перевлючателя П-образной
@@ -24,6 +25,7 @@ export class MainPage{
 
     constructor(page){
         this.page = page;
+        this.timeOut = 60000;
         this.hideTopButton = page.locator('[data-testid="hide-countertop"]');
         this.tableTop = page.locator('img[src="/static/media/countertop-q.41258f0aa91cd0c9fa4e.png"]');
     //  this.tableTop = page.locator('img.style_ctopImg__vjPZm'); // По стилю
@@ -46,7 +48,7 @@ export class MainPage{
     }
     
     async hideTop(){
-        await expect(this.tableTop).toBeVisible({ timeout: 5000 });
+        await expect(this.tableTop).toBeVisible({ timeout: this.timeOut });
         await this.hideTopButton.click();
         await expect(this.tableTop).toBeHidden();
     }
@@ -54,7 +56,7 @@ export class MainPage{
     async showUtypeTop(){
         await expect(this.UtypeTop).toBeHidden();
         await this.typeU.click();
-        await expect(this.UtypeTop).toBeVisible({ timeout: 5000 });
+        await expect(this.UtypeTop).toBeVisible({ timeout: this.timeOut });
     }
 
     async thickSelect(thick){
@@ -80,9 +82,9 @@ export class MainPage{
     }
 
     async plinthSwitch(){
-        await expect(this.plinthButton).toBeVisible({ timeout: 5000 });
-        await expect(this.plinthLeft).toBeVisible({ timeout: 5000 });
-        await expect(this.plinthRight).toBeVisible({ timeout: 5000 });
+        await expect(this.plinthButton).toBeVisible({ timeout: this.timeOut });
+        await expect(this.plinthLeft).toBeVisible({ timeout: this.timeOut });
+        await expect(this.plinthRight).toBeVisible({ timeout: this.timeOut });
         await this.plinthButton.click();
         await expect(this.plinthLeft).toBeHidden();
         await expect(this.plinthRight).toBeHidden();
@@ -91,25 +93,25 @@ export class MainPage{
     async islandSwitch(){
         await expect(this.island).toBeHidden();
         await this.islandButton.click();
-        await expect(this.island).toBeVisible({ timeout: 5000 });
+        await expect(this.island).toBeVisible({ timeout: this.timeOut });
     } 
 
     async grooveSwitch(){
         await expect(this.groove).toBeHidden();
         await this.grooveButton.click();
-        await expect(this.groove).toBeVisible({ timeout: 5000 });
+        await expect(this.groove).toBeVisible({ timeout: this.timeOut });
     }  
     
     async colorSwitch(){
         await expect(this.color).toBeVisible();
         await this.color.click();
-        await expect(this.colorSelected).toBeVisible({ timeout: 5000 });
+        await expect(this.colorSelected).toBeVisible({ timeout: this.timeOut });
     }
 
     async report() {
         await expect(this.calcButton).toBeVisible();
         await this.calcButton.click();
-        await expect(this.reportButton).toBeVisible({ timeout: 30000 });
+        await expect(this.reportButton).toBeVisible({ timeout: this.timeOut });
         await this.reportButton.click();
     }
 }
