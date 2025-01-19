@@ -6,7 +6,8 @@ export class LoginPage{
     loginField: Locator; // объявили свойство cookieAcceptButton 
     passField: Locator; // объявили свойство cookieAcceptButton
     loginButton: Locator; // объявили свойство cookieAcceptButton
-    mainElement: Locator; // объявили свойство searchField     
+    mainElement: Locator; // объявили свойство searchField
+    timeOut : number; // объявили свойство searchField
 
     constructor(page){
         this.page = page;
@@ -14,9 +15,10 @@ export class LoginPage{
         this.passField = page.locator('//input[@name="pass"]');
         this.loginButton = page.locator('//button[@type="button"]');
         this.mainElement = page.locator('[id="root"]');
+        this.timeOut = 60000;
     }
     async openPage(){
-        await this.page.goto("https://dev.topklik.online", {timeout: 50000, waitUntil: 'load'});
+        await this.page.goto("https://dev.topklik.online", {timeout: this.timeOut, waitUntil: 'load'});
  //       await this.cartButton.click(), {timeout: 50000, waitUntil: 'load'};
     }
 
@@ -24,6 +26,6 @@ export class LoginPage{
         await this.loginField.fill(login);
         await this.passField.fill(password);
         await this.loginButton.click();
-        await expect(this.mainElement).toBeVisible({ timeout: 5000 });
+        await expect(this.mainElement).toBeVisible({ timeout: this.timeOut });
   }
 }
