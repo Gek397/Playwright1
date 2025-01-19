@@ -10,7 +10,7 @@ on:
 
 jobs:
   test:
-    runs-on: ubuntu-latest  # Используем последнюю версию Ubuntu
+    runs-on: ubuntu-22.04  # Используем Ubuntu 22.04
 
     steps:
     - name: Checkout repository
@@ -19,7 +19,7 @@ jobs:
     - name: Set up Node.js
       uses: actions/setup-node@v3
       with:
-        node-version: '18'  # Обновляем Node.js до версии 18
+        node-version: '18'  # Используем актуальную версию Node.js
 
     - name: Install npm 9
       run: |
@@ -34,6 +34,11 @@ jobs:
 
     - name: Install Playwright dependencies
       run: npx playwright install-deps  # Устанавливаем необходимые зависимости для Playwright
+
+    - name: Install Allure Commandline
+      run: |
+        sudo apt-get update
+        sudo apt-get install -y allure  # Устанавливаем Allure на Ubuntu
 
     - name: Install missing system dependencies
       run: |
@@ -68,11 +73,11 @@ jobs:
           libevent-2.1-6 \
           libx264-160 \
           libgbm1 \
-          libnss3-tools  # Устанавливаем дополнительные зависимости
-
-    - name: Install Allure Commandline
-      run: |
-        sudo apt-get install -y allure  # Устанавливаем Allure на Ubuntu
+          libnss3-tools \
+          software-properties-common \
+          apt-transport-https \
+          ca-certificates \
+          curl  # Устанавливаем дополнительные зависимости
 
     - name: Run Playwright Tests with Allure
       run: |
