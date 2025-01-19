@@ -1,0 +1,22 @@
+{
+  "name": "temp",
+  "version": "1.0.0",
+  "description": "",
+  "main": "index.js",
+  "scripts": {},
+  "keywords": [],
+  "author": "",
+  "license": "ISC",
+  "devDependencies": {
+    "@faker-js/faker": "^9.3.0",
+    "@playwright/test": "^1.42.1",
+    "@types/node": "^20.11.24",
+    "allure-commandline": "^2.32.0",
+    "allure-playwright": "^3.0.8"
+  },
+  "dependencies": {
+    "@types/node-fetch": "^2.6.12",
+    "axios": "^1.7.9",
+    "node-fetch": "^3.3.2"
+  }
+}
