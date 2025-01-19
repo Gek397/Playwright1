@@ -1,97 +1,39 @@
-name: Run Playwright Tests with Allure Report
+name: Playwright Tests with Allure
 
 on:
   push:
     branches:
       - main
   pull_request:
-    branches:
-      - main
 
 jobs:
   test:
-    runs-on: ubuntu-22.04  # Используем Ubuntu 22.04
+    runs-on: ubuntu-latest
 
     steps:
     - name: Checkout repository
-      uses: actions/checkout@v3
+      uses: actions/checkout@v2
 
-    - name: Set up Node.js
-      uses: actions/setup-node@v3
+    - name: Setup Node.js
+      uses: actions/setup-node@v2
       with:
-        node-version: '18'  # Используем актуальную версию Node.js
-
-    - name: Install npm 9
-      run: |
-        npm install -g npm@9  # Обновляем npm до версии 9
+        node-version: '16' # Используйте вашу версию Node.js
 
     - name: Install dependencies
+      run: npm ci
+
+    - name: Run Playwright Tests
       run: |
-        npm ci  # Устанавливаем зависимости, включая Playwright
+        npx playwright test --reporter=line,allure-playwright # Убедитесь, что Allure интеграция настроена.
 
-    - name: Install Playwright Browsers
-      run: npx playwright install  # Устанавливаем браузеры для Playwright
-
-    - name: Install Playwright dependencies
-      run: npx playwright install-deps  # Устанавливаем необходимые зависимости для Playwright
-
-    - name: Install Allure Commandline
-      run: |
-        sudo apt-get update
-        sudo apt-get install -y allure  # Устанавливаем Allure на Ubuntu
-
-    - name: Install missing system dependencies
-      run: |
-        sudo apt-get update
-        sudo apt-get install -y \
-          libasound2 \
-          libicu63 \
-          libffi-dev \
-          libvpx-dev \
-          x264 \
-          libvpx \
-          libgtk-3-0 \
-          libx11-xcb1 \
-          libsecret-1-0 \
-          libnss3 \
-          libatk-bridge2.0-0 \
-          libatk1.0-0 \
-          libcups2 \
-          libdbus-glib-1-2 \
-          libflite1 \
-          libgdk-pixbuf2.0-0 \
-          libdbus-1-3 \
-          libxrender1 \
-          libglib2.0-0 \
-          libudev1 \
-          libv4l-0 \
-          libopus0 \
-          libgcrypt20 \
-          libfontconfig1 \
-          libxt6 \
-          libnspr4 \
-          libevent-2.1-6 \
-          libx264-160 \
-          libgbm1 \
-          libnss3-tools \
-          software-properties-common \
-          apt-transport-https \
-          ca-certificates \
-          curl  # Устанавливаем дополнительные зависимости
-
-    - name: Run Playwright Tests with Allure
-      run: |
-        npx playwright test --reporter=allure-playwright  # Запуск тестов с Allure репортером
+    - name: Install Allure CLI
+      run: npm install -g allure-commandline --save-dev
 
     - name: Generate Allure Report
-      run: |
-        allure generate --clean  # Генерация Allure отчета
+      run: allure generate allure-results --clean -o allure-report
 
-    - name: Upload Allure Report to GitHub Pages
-      uses: peaceiris/actions-gh-pages@v3
+    - name: Upload Allure Report
+      uses: actions/upload-artifact@v2
       with:
-        folder: allure-report  # Указываем папку, в которой находится отчет
-        target_branch: gh-pages  # Загружаем на ветку gh-pages
-        commit_message: "Deploy Allure Report"
-        user_name: "github-actions"
-        user_email: "github-actions@github.com"
+        name: allure-report
+        path: allure-report
