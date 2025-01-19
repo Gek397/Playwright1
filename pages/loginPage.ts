@@ -24,6 +24,7 @@ export class LoginPage{
         await this.loginField.fill(login);
         await this.passField.fill(password);
         await this.loginButton.click();
+        await this.mainElement.waitFor({ state: 'visible' });  // Ждем, пока кнопка станет видимой
         await expect(this.mainElement).toBeVisible();
   }
 }
