@@ -32,42 +32,18 @@ jobs:
       run: |
         sudo apt-get update
         sudo apt-get install -y \
-          libicu70 \
-          libicudata.so.70 \
-          libicui18n.so.70 \
-          libicuuc.so.70 \
-          libwoff2dec1 \
-          libvpx6 \
+          libicu63 \
+          libvpx5 \
           libevent-2.1-7 \
           libopus0 \
           libharfbuzz0b \
-          libgst1.0-0 \
-          libgstapp1.0-0 \
-          libgstpbutils1.0-0 \
-          libgstaudio1.0-0 \
-          libgsttag1.0-0 \
-          libgstvideo1.0-0 \
-          libgstgl1.0-0 \
-          libgstcodecparsers1.0-0 \
-          libgstfft1.0-0 \
+          gstreamer1.0-plugins-base \
+          gstreamer1.0-plugins-good \
+          libx264 \
+          libgles2-mesa \
           libsecret-1-0 \
           libhyphen0 \
-          libmanette0 \
-          libflite1 \
-          libflite_usenglish1 \
-          libflite_cmu_grapheme_lang1 \
-          libflite_cmu_grapheme_lex1 \
-          libflite_cmu_indic_lang1 \
-          libflite_cmu_indic_lex1 \
-          libflite_cmulex1 \
-          libflite_cmu_time_awb1 \
-          libflite_cmu_us_awb1 \
-          libflite_cmu_us_kal16_1 \
-          libflite_cmu_us_kal1 \
-          libflite_cmu_us_rms1 \
-          libflite_cmu_us_slt1 \
-          libgles2-mesa \
-          libx264-152
-          
+          libflite1
+
     - name: Run tests
       run: npx playwright test
