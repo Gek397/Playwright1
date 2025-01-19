@@ -23,7 +23,7 @@ jobs:
 
     - name: Install dependencies
       run: |
-        npm install  # Устанавливаем зависимости, включая Playwright
+        npm ci  # Используем npm ci для более быстрого и надежного процесса установки
 
     - name: Install Playwright Browsers
       run: npx playwright install  # Устанавливаем браузеры, необходимые для тестов
