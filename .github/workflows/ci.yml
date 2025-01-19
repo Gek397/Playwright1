@@ -1,4 +1,4 @@
-name: Run Playwright Tests
+name: Run Playwright Tests with Allure Report
 
 on:
   push:
@@ -23,14 +23,31 @@ jobs:
 
     - name: Install dependencies
       run: |
-        npm ci  # Используем npm ci для установки зависимостей
+        npm ci  # Устанавливаем зависимости, включая Playwright
 
     - name: Install Playwright Browsers
       run: npx playwright install  # Устанавливаем браузеры для Playwright
 
-    - name: Install missing dependencies for Playwright
-      run: |
-        npx playwright install-deps  # Используем Playwright для установки необходимых зависимостей
+    - name: Install Playwright dependencies
+      run: npx playwright install-deps  # Устанавливаем необходимые зависимости для Playwright
 
-    - name: Run tests
-      run: npx playwright test
+    - name: Install Allure Commandline
+      run: |
+        sudo apt-get install -y allure  # Устанавливаем Allure на Ubuntu
+
+    - name: Run Playwright Tests with Allure
+      run: |
+        npx playwright test --reporter=allure-playwright  # Запуск тестов с Allure репортером
+
+    - name: Generate Allure Report
+      run: |
+        allure generate --clean  # Генерация Allure отчета
+
+    - name: Upload Allure Report to GitHub Pages
+      uses: peaceiris/actions-gh-pages@v3
+      with:
+        folder: allure-report  # Указываем папку, в которой находится отчет
+        target_branch: gh-pages  # Загружаем на ветку gh-pages
+        commit_message: "Deploy Allure Report"
+        user_name: "github-actions"
+        user_email: "github-actions@github.com"
