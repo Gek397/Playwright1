@@ -13,7 +13,7 @@ export class LoginPage{
         this.loginField = page.locator('//input[@name="login"]');
         this.passField = page.locator('//input[@name="pass"]');
         this.loginButton = page.locator('//button[@type="button"]');
-        this.mainElement = page.locator(".style_main__nAMRV");
+        this.mainElement = page.locator('[id="root"]');
     }
     async openPage(){
         await this.page.goto("https://dev.topklik.online", {timeout: 50000, waitUntil: 'load'});
@@ -24,7 +24,6 @@ export class LoginPage{
         await this.loginField.fill(login);
         await this.passField.fill(password);
         await this.loginButton.click();
-        await this.mainElement.waitFor({ state: 'visible' });  // Ждем, пока кнопка станет видимой
-        await expect(this.mainElement).toBeVisible();
+        await expect(this.mainElement).toBeVisible({ timeout: 5000 });
   }
 }
